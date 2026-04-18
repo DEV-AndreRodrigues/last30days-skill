@@ -5,6 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.9] - 2026-04-18 - The Self-Debug Release
+
+### Highlights
+
+v3.0.9 adds the engine-side Class 1 keyword-trap refuse-gate ("birthday gift for 40 year old" now gets a clarifying question, not 5 minutes of junk), promotes TikTok and YouTube top comments to the same first-class rendering Reddit's got, lands Hermes AI Agent as a first-class deploy target, and moves the SKILL.md formatting contract from line 1094 to the top of the file.
+
+"The Self-Debug Release" refers to how the fixes in 3.0.6-3.0.9 were written: 5 separate Opus 4.7 instances each debugged their own failed outputs. Three converged on "SKILL.md is too big and the LAWs are too deep." Two converged on "the engine should refuse demographic-shopping queries." I shipped exactly what they said. Validation: 5/5 canonical compliance.
+
+### Added
+
+- **Engine Class 1 keyword-trap refuse-gate** (`scripts/lib/preflight.py`, new). Pattern-matches demographic-shopping queries at main() front-door. Exit code 2 with structured REFUSE message. Escape hatch: `LAST30DAYS_SKIP_PREFLIGHT=1`. 29 tests in `tests/test_preflight.py`.
+- **TikTok + YouTube top comments** rendered with same `💬 Top comment` prominence as Reddit's. Shipped in [#260](https://github.com/mvanhorn/last30days-skill/pull/260); enrichment fixed in [#265](https://github.com/mvanhorn/last30days-skill/pull/265).
+- **Hermes AI Agent as a deploy target** - thanks @stephenmcconnachie ([#228](https://github.com/mvanhorn/last30days-skill/pull/228)). `scripts/sync.sh` detects `~/.hermes/skills/research` and deploys automatically.
+- **Multi-key SCRAPECREATORS_API_KEY rotation** - thanks @zaydiscold ([#268](https://github.com/mvanhorn/last30days-skill/pull/268)). Set `SCRAPECREATORS_API_KEY_1`, `_2`, etc. Engine rotates on rate-limit.
+- **Offline quality evaluation fixture** - thanks @j-sperling ([#233](https://github.com/mvanhorn/last30days-skill/pull/233)). `eval_topics.json` lets contributors run quality regressions without burning live API credits.
+- **END-OF-CANONICAL-OUTPUT boundary** in `render_compact()`. Engine now emits an explicit pass-through instruction so re-synthesis requires actively ignoring a visible boundary.
+- **LAW 1 verbatim-pattern override.** LAW 1 now quotes the exact WebSearch tool-result reminder ("CRITICAL REQUIREMENT: MUST include Sources: section") and declares it OVERRIDDEN inside last30days output.
+
+### Changed
+
+- **SKILL.md restructure.** VOICE CONTRACT LAWs and BADGE MANDATORY block moved from line 1094 to lines 75-150. Grounded in 3 separate Opus 4.7 self-debugs.
+- **Engine emits the badge as stdout.** `🌐 last30days v3.0.9 · synced YYYY-MM-DD` is the first line of every compact emit. Pass-through is now the default-correct behavior.
+- **Reddit client HTTP consolidation** - thanks @iliaal ([#207](https://github.com/mvanhorn/last30days-skill/pull/207)). Migrated to `http.get(params=...)` helper.
+- **ScrapeCreators header consolidation** - thanks @iliaal ([#209](https://github.com/mvanhorn/last30days-skill/pull/209)). `_sc_headers` refactored into `http.scrapecreators_headers`.
+- **Simpler Hermes sync.** `scripts/sync.sh` Hermes branch now always uses main SKILL.md (previously had a `.hermes-plugin/SKILL.md` fallback that created a wrong-file-capture hazard).
+
+### Fixed
+
+- **Peter Steinberger trailing Sources leak.** 2026-04-18 validation failure where the model appended a TechCrunch / TED / Fortune / Wikipedia Sources list after the invitation. Now structurally prevented at three layers: engine emits the canonical body, LAW 1 quotes the exact WebSearch reminder, closing boundary names the anti-pattern.
+- **Wrong-file SKILL.md capture.** Deleted `.agents/skills/last30days/SKILL.md` (1382 lines, April 13 snapshot) and `.hermes-plugin/SKILL.md` (269 lines). One SKILL.md per plugin now, at the plugin root.
+- **GitHub date parsing garbage** - thanks @iliaal ([#208](https://github.com/mvanhorn/last30days-skill/pull/208)). `_parse_date` now rejects invalid input cleanly.
+- **Windows Bird X stability** - thanks @Chelebii ([#227](https://github.com/mvanhorn/last30days-skill/pull/227)).
+- **Linux `check_perms` false-warn** - thanks @george231224 ([#216](https://github.com/mvanhorn/last30days-skill/pull/216)). Uses GNU stat first.
+- **UTF-8 saved output** - thanks @Gujiassh ([#225](https://github.com/mvanhorn/last30days-skill/pull/225)).
+- **Version metadata alignment** - thanks @Gujiassh ([#217](https://github.com/mvanhorn/last30days-skill/pull/217)) and @shalomma ([#229](https://github.com/mvanhorn/last30days-skill/pull/229)).
+- **`--days` alias backcompat** - thanks @BryanTegomoh ([#230](https://github.com/mvanhorn/last30days-skill/pull/230)).
+- **`INCLUDE_SOURCES` env default** - thanks @hnshah ([#223](https://github.com/mvanhorn/last30days-skill/pull/223)).
+- **Bird X all-None engagement** - thanks @j-sperling ([#234](https://github.com/mvanhorn/last30days-skill/pull/234)).
+
+### Contributors
+
+@j-sperling, @stephenmcconnachie, @zaydiscold, @iliaal, @Chelebii, @Gujiassh, @hnshah, @george231224, @shalomma, @BryanTegomoh for PRs since v3.0.0. @uppinote20, @zerone0x, @thinkun, @thomasmktong, @fanispoulinakisai-boop, @pejmanjohn, @zl190, @Jah-yee, @dannyshmueli, @Cody-Coyote for issues and PRs that shaped the v3 roadmap.
+
+### Recovery
+
+```
+/plugin update last30days
+/reload-plugins
+```
+
+Verify: `cat ~/.claude/plugins/cache/last30days-skill/last30days/*/.claude-plugin/plugin.json | grep version` returns `"version": "3.0.9"`.
+
+Smoke test: `/last30days birthday gift for 40 year old` should ask a clarifying question before running.
+
 ## [3.0.5] - 2026-04-15
 
 ### Added
@@ -270,6 +324,7 @@ Three headline features: watchlists for always-on bots, YouTube transcripts as a
 
 Initial public release. Reddit + X search via OpenAI Responses API and xAI API.
 
+[3.0.9]: https://github.com/mvanhorn/last30days-skill/compare/v3.0.5...v3.0.9
 [2.9.1]: https://github.com/mvanhorn/last30days-skill/compare/v2.9.0...v2.9.1
 [2.9.0]: https://github.com/mvanhorn/last30days-skill/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/mvanhorn/last30days-skill/compare/v2.6.0...v2.8.0
