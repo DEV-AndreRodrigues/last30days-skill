@@ -70,11 +70,38 @@ deste repositório. Ele contém:
 - Público-alvo (profissional de SST) com dor central definida
 - Tom de voz com exemplos reais de escrita
 - Queries prioritárias para o nicho SST
-- Pipeline de 3 estágios de conteúdo
+- IDs do Notion para automação
 
 **Regra:** Todo output deve ser filtrado pelo contexto do André.
 Use as queries de SST como ponto de partida quando nenhum tópico for especificado.
 Gere sempre conteúdo adequado para **LinkedIn brasileiro**, não para mercado americano.
+
+## PIPELINE PÓS-PESQUISA — OBRIGATÓRIO
+
+Após concluir a síntese do /last30days, execute SEMPRE os dois estágios abaixo.
+Nunca entregue apenas o output no terminal sem completar o pipeline.
+
+Leia o arquivo `NOTION-AUTOMATION.md` para instruções completas de cada estágio.
+
+### Estágio A — Salvar pesquisa no Notion
+- Criar subpágina em Web Research (ID: `34a9530494f4808baeecf6d112d7ead8`)
+- Nome: `<Assunto Resumido> | AAAAMMDD` (ex: `Wearable SST Brasil | 20260422`)
+- Conteúdo: metadados + what I learned + key patterns + dados de engajamento + oportunidades
+
+### Estágio B — Gerar lead magnet e salvar no database
+- Gerar playbook de 1.200–1.500 palavras baseado nos insights da pesquisa
+- Gerar 3 variações de post LinkedIn: contrário, dor, resultado
+- Salvar no database Lead Magnets (data source: `b54e7490-a85a-452f-8748-2f84fb7c761f`)
+- Status inicial: `Rascunho`
+
+### Confirmação final obrigatória
+```
+📦 Pipeline concluído:
+✅ Pesquisa salva → [nome da subpágina]
+✅ Lead magnet criado → [título]
+📋 Status: Rascunho — revisar antes de publicar
+🎯 Próximo passo: revisar o lead magnet e escolher qual post publicar no LinkedIn
+```
 
 ---
 

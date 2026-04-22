@@ -180,3 +180,25 @@ IoT industrial Brasil segurança
 - Bastidores e aprendizados reais
 - Vulnerabilidade estratégica — "ainda estou aprendendo"
 - Histórias de clientes (sem revelar dados sensíveis)
+
+---
+
+## Automação Notion — IDs e Padrões
+
+### IDs das páginas
+| Recurso | ID |
+|---------|-----|
+| Web Research | `34a9530494f4808baeecf6d112d7ead8` |
+| Lead Magnets DB | `b54e7490-a85a-452f-8748-2f84fb7c761f` |
+
+### Padrão de nomenclatura
+Subpáginas de pesquisa: `<Assunto Resumido> | AAAAMMDD`
+Exemplo: `Wearable SST Brasil | 20260422`
+
+### Pipeline obrigatório após cada pesquisa
+1. Exibir síntese no terminal
+2. Salvar pesquisa em Web Research (Notion)
+3. Gerar lead magnet e salvar no database Lead Magnets
+4. Exibir confirmação com links
+
+Consultar NOTION-AUTOMATION.md para instruções completas.
