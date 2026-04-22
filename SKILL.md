@@ -59,6 +59,25 @@ metadata:
       - clawhub
 ---
 
+# CONTEXTO DO USUÁRIO — LEIA ANTES DE QUALQUER PESQUISA
+
+Este fork pertence a **André Rodrigues** e está configurado para personal branding
+no nicho de **Segurança do Trabalho + Indústria 4.0 no Brasil**.
+
+Antes de executar qualquer pesquisa, leia o arquivo `ANDRE-CONTEXT.md` na raiz
+deste repositório. Ele contém:
+- Ponto de vista central e posicionamento
+- Público-alvo (profissional de SST) com dor central definida
+- Tom de voz com exemplos reais de escrita
+- Queries prioritárias para o nicho SST
+- Pipeline de 3 estágios de conteúdo
+
+**Regra:** Todo output deve ser filtrado pelo contexto do André.
+Use as queries de SST como ponto de partida quando nenhum tópico for especificado.
+Gere sempre conteúdo adequado para **LinkedIn brasileiro**, não para mercado americano.
+
+---
+
 # SKILL CONTRACT — READ BEFORE ANY TOOL CALL
 
 You are inside the `/last30days` SKILL. This is a specific research tool with a 1400+ line instruction contract (the rest of this file) that defines EXACTLY how to produce the research output. It is not a generic "last 30 days of X" research prompt. Do NOT treat `/last30days` as a search keyword you can improvise against.
